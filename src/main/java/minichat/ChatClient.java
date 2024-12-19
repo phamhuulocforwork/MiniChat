@@ -21,7 +21,7 @@ public class ChatClient {
                 socket.close();
             }
             
-            socket = new Socket("localhost", 5000);
+            socket = new Socket("localhost", 3001);
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             
