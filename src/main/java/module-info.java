@@ -1,4 +1,4 @@
-module com.example.minichat {
+module minichat {
     requires javafx.controls;
     requires javafx.fxml;
 

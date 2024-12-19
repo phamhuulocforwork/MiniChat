@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ChatServer {
-    private static final int PORT = 5000;
+    private static final int PORT = 3001;
     private final ServerSocket serverSocket;
     private final Map<String, Set<ClientHandler>> rooms;
 
