@@ -5,6 +5,6 @@ module com.example.minichat {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
 
-    opens com.example.minichat to javafx.fxml;
-    exports com.example.minichat;
+    opens minichat to javafx.fxml;
+    exports minichat;
 }
