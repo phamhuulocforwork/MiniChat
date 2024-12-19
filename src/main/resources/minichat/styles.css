@@ -1,0 +1,122 @@
+/* Color Variables */
+* {
+  -fx-discord-dark: #36393f;
+  -fx-discord-darker: #2f3136;
+  -fx-discord-darkest: #202225;
+  -fx-discord-light: #dcddde;
+  -fx-discord-accent: #7289da;
+}
+
+/* Root */
+.root {
+  -fx-background-color: -fx-discord-dark;
+  -fx-text-fill: -fx-discord-light;
+}
+
+/* Sidebar */
+.sidebar {
+  -fx-background-color: -fx-discord-darker;
+  -fx-min-width: 240;
+  -fx-padding: 10;
+}
+
+.sidebar-header {
+  -fx-fill: -fx-discord-light;
+  -fx-font-size: 12;
+  -fx-font-weight: bold;
+  -fx-padding: 10 0;
+}
+
+/* User Profile */
+.user-profile {
+  -fx-background-color: -fx-discord-darkest;
+  -fx-padding: 10;
+  -fx-spacing: 10;
+}
+
+/* Chat Area */
+.chat-header {
+  -fx-background-color: -fx-discord-dark;
+  -fx-padding: 10;
+  -fx-border-color: -fx-discord-darkest;
+  -fx-border-width: 0 0 1 0;
+}
+
+.chat-area {
+  -fx-background-color: -fx-discord-dark;
+  -fx-text-fill: -fx-discord-light;
+  -fx-control-inner-background: -fx-discord-dark;
+}
+
+/* Message Input */
+.message-input {
+  -fx-padding: 15;
+  -fx-spacing: 10;
+  -fx-background-color: -fx-discord-darker;
+}
+
+.message-input .text-field {
+  -fx-background-color: -fx-discord-darkest;
+  -fx-text-fill: -fx-discord-light;
+  -fx-prompt-text-fill: derive(-fx-discord-light, -30%);
+}
+
+/* Members Sidebar */
+.members-sidebar {
+  -fx-background-color: -fx-discord-darker;
+  -fx-min-width: 240;
+  -fx-padding: 10;
+}
+
+/* Join Dialog */
+.join-dialog {
+  -fx-background-color: -fx-discord-darker;
+  -fx-padding: 10;
+  -fx-spacing: 10;
+  -fx-alignment: center;
+}
+
+/* Common Elements */
+.button {
+  -fx-background-color: -fx-discord-accent;
+  -fx-text-fill: white;
+  -fx-cursor: hand;
+}
+
+.button:hover {
+  -fx-background-color: derive(-fx-discord-accent, 20%);
+}
+
+.text-field {
+  -fx-background-color: -fx-discord-darkest;
+  -fx-text-fill: -fx-discord-light;
+  -fx-prompt-text-fill: derive(-fx-discord-light, -30%);
+}
+
+.list-view {
+  -fx-background-color: transparent;
+}
+
+.list-cell {
+  -fx-background-color: transparent;
+  -fx-text-fill: -fx-discord-light;
+}
+
+.list-cell:hover {
+  -fx-background-color: derive(-fx-discord-darker, 10%);
+}
+
+/* Login Form */
+.login-form {
+  -fx-background-color: -fx-discord-darker;
+  -fx-padding: 20;
+  -fx-max-width: 300;
+  -fx-alignment: center;
+}
+
+.app-title {
+  -fx-font-size: 24;
+  -fx-font-weight: bold;
+  -fx-text-fill: -fx-discord-light;
+  -fx-padding: 0 0 20 0;
+}

@@ -3,6 +3,7 @@ package minichat;
 import javafx.scene.control.TextArea;
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
 public class ChatClient {
     private final String username;
@@ -10,6 +11,18 @@ public class ChatClient {
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
+    private final List<ChatMemberListener> memberListeners = new ArrayList<>();
+
+    public interface ChatMemberListener {
+        void onMemberJoin(String username);
+        void onMemberLeave(String username);
+        void onMemberListReceived(List<String> members);
+    }
+
+    public void addMemberListener(ChatMemberListener listener) {
+        memberListeners.add(listener);
+    }
+
     public ChatClient(String username, @SuppressWarnings("exports") TextArea messageArea) {
         this.username = username;
         this.messageArea = messageArea;
@@ -21,13 +34,13 @@ public class ChatClient {
                 socket.close();
             }
             
-            socket = new Socket("localhost", 3001);
+            socket = new Socket("localhost", 5000);
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             
             out.println(username + "|" + roomCode);
             
-            // Start message receiving thread
+            // Bắt đầu thread nhận tin nhắn
             new Thread(this::receiveMessages).start();
             
         } catch (IOException e) {
@@ -40,14 +53,39 @@ public class ChatClient {
         try {
             String message;
             while ((message = in.readLine()) != null) {
-                final String finalMessage = message;
-                javafx.application.Platform.runLater(() -> 
-                    messageArea.appendText(finalMessage + "\n")
-                );
+                if (message.startsWith("MEMBER_")) {
+                    handleMemberMessage(message);
+                } else {
+                    final String finalMessage = message;
+                    javafx.application.Platform.runLater(() -> 
+                        messageArea.appendText(finalMessage + "\n")
+                    );
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void handleMemberMessage(String message) {
+        String[] parts = message.split("\\|");
+        String type = parts[0];
+        String data = parts[1];
+
+        javafx.application.Platform.runLater(() -> {
+            switch (type) {
+                case "MEMBER_JOIN":
+                    memberListeners.forEach(listener -> listener.onMemberJoin(data));
+                    break;
+                case "MEMBER_LEAVE":
+                    memberListeners.forEach(listener -> listener.onMemberLeave(data));
+                    break;
+                case "MEMBER_LIST":
+                    List<String> members = Arrays.asList(data.split(","));
+                    memberListeners.forEach(listener -> listener.onMemberListReceived(members));
+                    break;
+            }
+        });
     }
 
     public void sendMessage(String message) {
@@ -62,7 +100,6 @@ public class ChatClient {
     }
 
     public void receiveMessage(String message) {
-      // TODO Auto-generated method stub
       throw new UnsupportedOperationException("Unimplemented method 'receiveMessage'");
     }
 }

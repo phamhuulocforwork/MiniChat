@@ -2,6 +2,7 @@ package minichat;
 
 import java.io.*;
 import java.net.*;
+import java.util.Set;
 
 public class ClientHandler implements Runnable {
     private final Socket socket;
@@ -16,6 +17,10 @@ public class ClientHandler implements Runnable {
         this.server = server;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     @Override
     public void run() {
         try {
@@ -28,10 +33,18 @@ public class ClientHandler implements Runnable {
             this.roomCode = parts[1];
             
             server.addToRoom(roomCode, this);
+            
+            //NOTE: Gửi danh sách user hiện tại
+            Set<String> members = server.getRoomMembers(roomCode);
+            sendMessage("MEMBER_LIST|" + String.join(",", members));
 
             String message;
             while ((message = in.readLine()) != null) {
-                server.broadcastToRoom(roomCode, username + ": " + message, this);
+                if (message.startsWith("MEMBER_")) {
+                    server.broadcastToRoom(roomCode, message, this);
+                } else {
+                    server.broadcastToRoom(roomCode, username + ": " + message, this);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
