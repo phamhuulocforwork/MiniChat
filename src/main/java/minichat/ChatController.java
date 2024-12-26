@@ -34,7 +34,7 @@ public class ChatController {
         roomList.setItems(rooms);
         membersList.setItems(members);
         
-        //NOTE: Ẩn form login và hiển thị chat interface
+        //NOTE: mặc định hiển thị ui chọn phòng
         loginForm.setVisible(true);
         chatInterface.setVisible(false);
     }
@@ -55,7 +55,7 @@ public class ChatController {
                 @Override
                 public void onMemberJoin(String username) {
                     members.add("🟢 " + username);
-                    chatArea.appendText(username + " đã tham gia phòng\n");
+                    chatArea.appendText(username + " đã tham gia vào phòng\n");
                 }
 
                 @Override
@@ -76,16 +76,34 @@ public class ChatController {
 
         client.joinRoom(roomCode);
         
-        //NOTE: Chuyển từ form login sang chat
         loginForm.setVisible(false);
         chatInterface.setVisible(true);
         
         usernameLabel.setText(username);
-        roomNameLabel.setText("# Room-" + roomCode);
-        rooms.add("# Room-" + roomCode);
+        roomNameLabel.setText("# Phòng-" + roomCode);
+        rooms.add("# Phòng-" + roomCode);
         
         chatArea.clear();
-        chatArea.appendText("Bạn đang ở phòng-" + roomCode + "\n");
+        chatArea.appendText("Chào mừng đến phòng-" + roomCode + "!\n");
+    }
+
+    @FXML
+    private void onLeaveRoom() {
+        if (client != null) {
+            client.leaveRoom();
+            
+            //NOTE: Quay về giao diện chọn phòng
+            loginForm.setVisible(true);
+            chatInterface.setVisible(false);
+            
+            //NOTE: Xóa dữ liệu
+            chatArea.clear();
+            messageField.clear();
+            rooms.clear();
+            members.clear();
+            
+            client = null;
+        }
     }
 
     @FXML

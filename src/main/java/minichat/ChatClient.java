@@ -84,6 +84,9 @@ public class ChatClient {
                     List<String> members = Arrays.asList(data.split(","));
                     memberListeners.forEach(listener -> listener.onMemberListReceived(members));
                     break;
+                case "HISTORY":
+                    messageArea.appendText(data + "\n");
+                    break;
             }
         });
     }
@@ -101,5 +104,17 @@ public class ChatClient {
 
     public void receiveMessage(String message) {
       throw new UnsupportedOperationException("Unimplemented method 'receiveMessage'");
+    }
+
+    public void leaveRoom() {
+        try {
+            if (socket != null && !socket.isClosed()) {
+                socket.close();
+                messageArea.appendText("Đã rời phòng\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            messageArea.appendText("Lỗi khi rời phòng: " + e.getMessage() + "\n");
+        }
     }
 }

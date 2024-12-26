@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" 
-            fx:controller="minichat.ChatController" 
-            stylesheets="@styles.css">
+<StackPane stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minichat.ChatController">
             
     <!-- Login Form -->
-    <VBox fx:id="loginForm" alignment="CENTER" spacing="10" styleClass="login-form">
-        <Label text="Mini Chat" styleClass="app-title"/>
-        <TextField fx:id="usernameField" promptText="Tên"/>
-        <TextField fx:id="roomCodeField" promptText="Mã phòng (6 chữ số)"/>
-        <Button onAction="#onJoinRoomClick" text="Tham gia"/>
+    <VBox fx:id="loginForm" alignment="CENTER" prefHeight="481.0" prefWidth="643.0" spacing="10" styleClass="login-form">
+        <Label styleClass="app-title" text="Mini Chat" />
+        <TextField fx:id="usernameField" promptText="Tên" />
+        <TextField fx:id="roomCodeField" promptText="Mã phòng (6 chữ số)" />
+        <Button onAction="#onJoinRoomClick" prefHeight="25.0" prefWidth="287.0" text="Tham gia" />
     </VBox>
 
     <!-- Main Chat Interface -->
-    <BorderPane fx:id="chatInterface" visible="false">
+    <BorderPane fx:id="chatInterface">
         <!-- Left Sidebar -->
         <left>
-            <VBox styleClass="sidebar">
-                <Text styleClass="sidebar-header" text="PHÒNG"/>
-                <ListView fx:id="roomList" VBox.vgrow="ALWAYS"/>
+            <VBox minWidth="142.0" prefHeight="481.0" prefWidth="142.0" styleClass="sidebar">
+                <Text styleClass="sidebar-header" text="PHÒNG" />
+                <ListView fx:id="roomList" VBox.vgrow="ALWAYS" />
                 
                 <!-- User Profile Section -->
                 <HBox styleClass="user-profile">
-                    <Label fx:id="usernameLabel" text="Chưa kết nối..."/>
-                    <Region HBox.hgrow="ALWAYS"/>
-                    <Button fx:id="settingsButton" text="⚙" onAction="#onSettingsClick"/>
+                    <Label fx:id="usernameLabel" text="Chưa kết nối..." />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button onAction="#onLeaveRoom" text="Rời phòng" />
                 </HBox>
             </VBox>
         </left>
@@ -39,25 +44,19 @@
             <VBox>
                 <!-- Chat Header -->
                 <HBox styleClass="chat-header">
-                    <Label fx:id="roomNameLabel" text="# Welcome"/>
-                    <Region HBox.hgrow="ALWAYS"/>
-                    <TextField fx:id="searchField" promptText="Search" onKeyPressed="#onSearch"/>
+                    <Label fx:id="roomNameLabel" text="# Welcome" />
+                    <Region HBox.hgrow="ALWAYS" />
+               <Region prefHeight="25.0" prefWidth="154.0" />
+                    <TextField fx:id="searchField" onKeyPressed="#onSearch" promptText="Search" />
                 </HBox>
                 
                 <!-- Messages Area -->
-                <TextArea fx:id="chatArea" 
-                          styleClass="chat-area" 
-                          editable="false" 
-                          wrapText="true" 
-                          VBox.vgrow="ALWAYS"/>
+                <TextArea fx:id="chatArea" editable="false" styleClass="chat-area" wrapText="true" VBox.vgrow="ALWAYS" />
                 
                 <!-- Message Input Area -->
                 <HBox styleClass="message-input">
-                    <TextField fx:id="messageField" 
-                              promptText="..."
-                              HBox.hgrow="ALWAYS"
-                              onAction="#onSendMessage"/>
-                    <Button onAction="#onSendMessage" text="Gửi"/>
+                    <TextField fx:id="messageField" onAction="#onSendMessage" promptText="..." HBox.hgrow="ALWAYS" />
+                    <Button onAction="#onSendMessage" text="Gửi" />
                 </HBox>
             </VBox>
         </center>
@@ -65,8 +64,8 @@
         <!-- Right Sidebar -->
         <right>
             <VBox styleClass="members-sidebar">
-                <Text styleClass="sidebar-header" text="THÀNH VIÊN"/>
-                <ListView fx:id="membersList" VBox.vgrow="ALWAYS"/>
+                <Text styleClass="sidebar-header" text="THÀNH VIÊN" />
+                <ListView fx:id="membersList" VBox.vgrow="ALWAYS" />
             </VBox>
         </right>
     </BorderPane>

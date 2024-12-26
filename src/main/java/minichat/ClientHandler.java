@@ -3,6 +3,7 @@ package minichat;
 import java.io.*;
 import java.net.*;
 import java.util.Set;
+import java.util.List;
 
 public class ClientHandler implements Runnable {
     private final Socket socket;
@@ -33,6 +34,12 @@ public class ClientHandler implements Runnable {
             this.roomCode = parts[1];
             
             server.addToRoom(roomCode, this);
+            
+            //NOTE: Gửi lịch sử chat
+            List<String> history = server.getRoomHistory(roomCode);
+            for (String msg : history) {
+                sendMessage(msg);
+            }
             
             //NOTE: Gửi danh sách user hiện tại
             Set<String> members = server.getRoomMembers(roomCode);
